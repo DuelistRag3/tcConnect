@@ -1,9 +1,17 @@
 # Changelog
 
-[V.0.1](#V.0.1)
+[V.0.1.1](#V.0.1.1)
+[V.0.1.0](#V.0.1.0)
 
-### V.0.1
-#### Added
+## V.0.1.1
+### Added
+- Added basic admin menu
+### Fixed
+- Fixed plugin failed to load because of wrong semicolons
+- Fixed plugin failed to load because $initiated constant missing
+
+## V.0.1.0
+### Added
 - Adding basic plugin load functions
 - Preventing to load if tried directly
 - Adding password hashing function

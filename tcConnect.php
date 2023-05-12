@@ -5,7 +5,7 @@
 /*
 /*
 Plugin Name: TrinityCore Connect
-Version: 0.1
+Version: 0.1.1
 Description: Used to Syncronize Wordpress CMS with World of Warcraft TrinityCore Database. New Users will automaticaly added into your TrinityCore Database (Currently only TrinityCore is supported)
 Author: DuelistRage
 Author URI: https://www.christian-dullin.de/
@@ -47,14 +47,15 @@ define( 'TCCONNECT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
  */
 register_activation_hook( __FILE__, array('tcConnect' ,'plugin_activate') );
 
-register_deactivation_hook( __FILE__, array('tcConnect' ,'plugin_deactivate') ):
+register_deactivation_hook( __FILE__, array('tcConnect' ,'plugin_deactivate') );
 
 require_once( TCCONNECT_PLUGIN_DIR . '/includes/class.tcConnect.php' );
 
-add_action( 'init', array('tcConnect', 'init') )
+add_action( 'init', array('tcConnect', 'init') );
 
 if ( is_admin(  ) ) {
     require_once( TCCONNECT_PLUGIN_DIR . '/includes/class.tcConnect-admin.php' );
+	add_action( 'init', array('tcConnect_Admin', 'init') );
 }
 
 ?>

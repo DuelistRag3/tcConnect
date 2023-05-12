@@ -1,15 +1,20 @@
 <?php
 
 class tcConnect {
+
+	private static $initiated = false;
+
     public static function init() {
 		if ( ! self::$initiated ) {
 			self::init_hooks();
-			self::init_database()
+			self::init_database();
 		}
 	}
 
     private static function init_hooks() {
-		add_action( 'user_register', array('tcConnect', 'create_trinity_user'), )
+		add_action( 'user_register', array( 'tcConnect', 'create_trinity_user'), );
+
+		self::$initiated = true;
     }
 
 	private static function init_database() {
