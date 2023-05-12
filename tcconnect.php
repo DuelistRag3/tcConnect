@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.christian-dullin.de
- * @since             0.1.1
+ * @since             0.1.0
  * @package           Tcconnect
  *
  * @wordpress-plugin
  * Plugin Name:       TrinityCore Connect
  * Plugin URI:        https://discord.gg/xbfZU6vsS9
- * Description:       Used to Syncronize Wordpress CMS with World of Warcraft TrinityCore Database. New Users will automaticaly added into your TrinityCore Database (Currently only TrinityCore is supported)
- * Version:           0.1.1
+ * Description:       TrinityCore Connect is used to connect your TrinityCore (TrinityCore is currently the only available database structure) database with wordpress
+ * Version:           0.1.0
  * Author:            DuelistRage
  * Author URI:        https://www.christian-dullin.de
  * License:           GPL-2.0+
@@ -31,11 +31,10 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Currently plugin version.
- * Start at version 0.1.1 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
+ * Define different named constants
  */
-define( 'TCCONNECT_VERSION', '0.1.1' );
+define( 'TCCONNECT_VERSION', '0.1.0' );
+!defined('TCCONNECT_PATH') && define('TCCONNECT_PATH', plugin_dir_path( __FILE__ ));
 
 /**
  * The code that runs during plugin activation.
@@ -71,7 +70,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-tcconnect.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    0.1.1
+ * @since    0.1.0
  */
 function run_tcconnect() {
 

@@ -6,7 +6,7 @@
  * This file is used to markup the public-facing aspects of the plugin.
  *
  * @link       https://www.christian-dullin.de
- * @since      0.1.1
+ * @since      0.1.0
  *
  * @package    Tcconnect
  * @subpackage Tcconnect/public/partials

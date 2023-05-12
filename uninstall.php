@@ -20,7 +20,7 @@
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
  * @link       https://www.christian-dullin.de
- * @since      0.1.1
+ * @since      0.1.0
  *
  * @package    Tcconnect
  */

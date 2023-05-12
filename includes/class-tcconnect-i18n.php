@@ -7,7 +7,7 @@
  * so that it is ready for translation.
  *
  * @link       https://www.christian-dullin.de
- * @since      0.1.1
+ * @since      0.1.0
  *
  * @package    Tcconnect
  * @subpackage Tcconnect/includes
@@ -19,7 +19,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @since      0.1.1
+ * @since      0.1.0
  * @package    Tcconnect
  * @subpackage Tcconnect/includes
  * @author     DuelistRage <admin@christian-dullin.de>
@@ -30,7 +30,7 @@ class Tcconnect_i18n {
 	/**
 	 * Load the plugin text domain for translation.
 	 *
-	 * @since    0.1.1
+	 * @since    0.1.0
 	 */
 	public function load_plugin_textdomain() {
 

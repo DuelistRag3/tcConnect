@@ -4,7 +4,7 @@
  * The admin-specific functionality of the plugin.
  *
  * @link       https://www.christian-dullin.de
- * @since      0.1.1
+ * @since      0.1.0
  *
  * @package    Tcconnect
  * @subpackage Tcconnect/admin
@@ -25,7 +25,7 @@ class Tcconnect_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    0.1.1
+	 * @since    0.1.0
 	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
@@ -34,7 +34,7 @@ class Tcconnect_Admin {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    0.1.1
+	 * @since    0.1.0
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -43,7 +43,7 @@ class Tcconnect_Admin {
 	/**
 	 * The options name to be used in this plugin
 	 *
-	 * @since  	1.0.0
+	 * @since  	0.1.0
 	 * @access 	private
 	 * @var  	string 		$option_name 	Option name of this plugin
 	*/
@@ -52,7 +52,7 @@ class Tcconnect_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    0.1.1
+	 * @since    0.1.0
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
@@ -66,7 +66,7 @@ class Tcconnect_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since    0.1.1
+	 * @since    0.1.0
 	 */
 	public function enqueue_styles() {
 
@@ -89,7 +89,7 @@ class Tcconnect_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
-	 * @since    0.1.1
+	 * @since    0.1.0
 	 */
 	public function enqueue_scripts() {
 
@@ -110,41 +110,120 @@ class Tcconnect_Admin {
 	}
 
 	/**
+	 * Include the settings page
+	 * 
+	 * @since 0.1.0
+	 * @access public
+	 */
+	function tcconnect_init() {
+		if( ! current_user_can( 'manage_options' )) {
+			return;
+		}
+
+		include TCCONNECT_PATH . 'admin/partials/tcconnect-admin-display.php';
+	}
+
+	/**
+	 * Creates our admin menu entry
+	 * 
+	 * @since 0.1.0
+	 * @access public
+	 */
+	public function tcconnect_init_menu() {
+		//add_menu_page( $page_title:string, $menu_title:string, $capability:string, $menu_slug:string, $callback:callable, $icon_url:string, $position:integer|float|null )
+		add_menu_page( 'TrinityCore Connect', 'TC Connect', 'manage_options', $this->plugin_name, array( $this, 'tcconnect_init'), 'dashicons-chart-area', 26 );
+	}
+
+	/**
 	 * Register the setting parameters
 	 *
-	 * @since  	0.1.1
+	 * @since  	0.1.0
 	 * @access 	public
-	*/
+	 */
 	public function register_tcconnect_plugin_settings() {
 		// Add a Database section
 		add_settings_section(
 			$this->option_name. '_database',
 			__( 'Database', 'tcconnect' ),
-			array( $this, $this->option_name . '_general_cb' ),
+			array( $this, $this->option_name . '_database_cb' ),
 			$this->plugin_name
 		);
-		// Add a boolean field
+		// Add the database fields
 		add_settings_field(
-			$this->option_name . '_bool',
-			__( 'Boolean setting', 'flowygo' ),
-			array( $this, $this->option_name . '_bool_cb' ),
+			$this->option_name . '_db_host',
+			'Database Host',
+			array( $this, $this->option_name . '_db_host_cb' ),
 			$this->plugin_name,
-			$this->option_name . '_general',
-			array( 'label_for' => $this->option_name . '_bool' )
+			$this->option_name . '_database',
+			array( 'label_for' => $this->option_name . '_db_host' )
 		);
-		// Add a numeric field
 		add_settings_field(
-			$this->option_name . '_number',
-			__( 'Number setting', 'flowygo' ),
-			array( $this, $this->option_name . '_number_cb' ),
+			$this->option_name . '_db_port',
+			'Database Port',
+			array( $this, $this->option_name . '_db_port_cb' ),
 			$this->plugin_name,
-			$this->option_name . '_general',
-			array( 'label_for' => $this->option_name . '_number' )
+			$this->option_name . '_database',
+			array( 'label_for' => $this->option_name . '_db_port' )
 		);
-		// Register the boolean field
-		register_setting( $this->plugin_name, $this->option_name . '_bool', array( $this, $this->option_name . '_sanitize_bool' ) );
-		// Register the numeric field
-		register_setting( $this->plugin_name, $this->option_name . '_number', 'integer' );
+		add_settings_field(
+			$this->option_name . '_db_name',
+			'Database Name',
+			array( $this, $this->option_name . '_db_name_cb' ),
+			$this->plugin_name,
+			$this->option_name . '_database',
+			array( 'label_for' => $this->option_name . '_db_name' )
+		);
+		add_settings_field(
+			$this->option_name . '_db_user',
+			'Database User',
+			array( $this, $this->option_name . '_db_user_cb' ),
+			$this->plugin_name,
+			$this->option_name . '_database',
+			array( 'label_for' => $this->option_name . '_db_user' )
+		);
+		add_settings_field(
+			$this->option_name . '_db_pass',
+			'Database Password',
+			array( $this, $this->option_name . '_db_pass_cb' ),
+			$this->plugin_name,
+			$this->option_name . '_database',
+			array( 'label_for' => $this->option_name . '_db_pass' )
+		);
+		// Register the database fields
+		register_setting( $this->plugin_name, $this->option_name . '_db_host', array( $this, $this->option_name . '_sanitize_db_host' ) );
+		register_setting( $this->plugin_name, $this->option_name . '_db_port', array( $this, $this->option_name . '_sanitize_db_port' ) );
+		register_setting( $this->plugin_name, $this->option_name . '_db_name', array( $this, $this->option_name . '_sanitize_db_name' ) );
+		register_setting( $this->plugin_name, $this->option_name . '_db_user', array( $this, $this->option_name . '_sanitize_db_user' ) );
+		register_setting( $this->plugin_name, $this->option_name . '_db_pass', array( $this, $this->option_name . '_sanitize_db_pass' ) );
 	} 
+
+	public function tcconnect_setting_database_cb() {
+		echo '<p>' . __( 'Insert TrinityCore Database infos.', 'tcconnect' ) . '</p>';
+	}
+
+	public function tcconnect_setting_db_host_cb() {
+		$val = get_option( $this->option_name, '127.0.0.1' );
+		echo '<input type="text" name="' . $this->option_name . '_db_host' . '" id="' . $this->option_name . '_db_host' . '" value="' . $val . '"> ';
+	}
+
+	public function tcconnect_setting_db_port_cb() {
+		$val = get_option( $this->option_name, '3306' );
+		echo '<input type="number" name="' . $this->option_name . '_db_port' . '" id="' . $this->option_name . '_db_port' . '" value="' . $val . '"> ';
+	}
+
+	public function tcconnect_setting_db_name_cb() {
+		$val = get_option( $this->option_name, 'trinity' );
+		echo '<input type="text" name="' . $this->option_name . '_db_name' . '" id="' . $this->option_name . '_db_name' . '" value="' . $val . '"> ';
+	}
+
+	public function tcconnect_setting_db_user_cb() {
+		$val = get_option( $this->option_name, 'trinity' );
+		echo '<input type="text" name="' . $this->option_name . '_db_user' . '" id="' . $this->option_name . '_db_user' . '" value="' . $val . '"> ';
+	}
+
+	public function tcconnect_setting_db_pass_cb() {
+		$val = get_option( $this->option_name, '' );
+		echo '<input type="password" name="' . $this->option_name . '_db_pass' . '" id="' . $this->option_name . '_db_pass' . '" value="' . $val . '"> ';
+	}
 
 }
